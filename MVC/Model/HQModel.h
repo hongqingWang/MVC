@@ -10,4 +10,9 @@
 
 @interface HQModel : NSObject
 
+/** 新闻主标题 */
+@property (nonatomic, copy) NSString *title;
+/** 新闻摘要 */
+@property (nonatomic, copy) NSString *digest;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "HQTableViewCell.h"
 #import "Masonry.h"
+#import "HQModel.h"
 
 @interface HQTableViewCell ()
 
@@ -19,6 +20,13 @@
 @end
 
 @implementation HQTableViewCell
+
+- (void)setModel:(HQModel *)model {
+    _model = model;
+    
+    self.newsTitleLabel.text = model.title;
+    self.newsSubTitleLabel.text = model.digest;
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -53,10 +61,12 @@
     [self.newsTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(8);
         make.left.equalTo(self).offset(16);
+        make.right.equalTo(self).offset(-16);
     }];
     [_newsSubTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_newsTitleLabel.mas_bottom).offset(8);
         make.left.equalTo(_newsTitleLabel);
+        make.right.equalTo(_newsTitleLabel);
     }];
 }
 
@@ -76,6 +86,7 @@
         _newsSubTitleLabel.text = @"副标题";
         _newsSubTitleLabel.textColor = [UIColor lightGrayColor];
         _newsSubTitleLabel.font = [UIFont systemFontOfSize:14];
+        _newsSubTitleLabel.numberOfLines = 2;
     }
     return _newsSubTitleLabel;
 }

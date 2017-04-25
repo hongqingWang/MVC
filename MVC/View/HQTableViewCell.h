@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class HQModel;
 
 @interface HQTableViewCell : UITableViewCell
 
 + (instancetype)tableViewCellWithTableView:(UITableView *)tableView;
+
+@property (nonatomic, strong) HQModel *model;
 
 @end
