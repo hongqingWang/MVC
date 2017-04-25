@@ -7,8 +7,11 @@
 //
 
 #import "HQViewController.h"
+#import "HQTableViewCell.h"
 
-@interface HQViewController ()
+@interface HQViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -18,23 +21,36 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"首页";
+    [self tableView];
+}
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    self.view.backgroundColor = [UIColor yellowColor];
+    HQTableViewCell *cell = [HQTableViewCell tableViewCellWithTableView:tableView];
+    return cell;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - UITableViewDelegate
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - lazy
+- (UITableView *)tableView {
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.rowHeight = 60;
+        [self.view addSubview:_tableView];
+    }
+    return _tableView;
 }
-*/
 
 @end

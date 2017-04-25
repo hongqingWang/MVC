@@ -7,18 +7,77 @@
 //
 
 #import "HQTableViewCell.h"
+#import "Masonry.h"
+
+@interface HQTableViewCell ()
+
+/** 主标题 */
+@property (nonatomic, strong) UILabel *newsTitleLabel;
+/** 副标题 */
+@property (nonatomic, strong) UILabel *newsSubTitleLabel;
+
+@end
 
 @implementation HQTableViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        
+        [self setupUI];
+    }
+    return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
++ (instancetype)tableViewCellWithTableView:(UITableView *)tableView {
+    
+    static NSString *ID = @"HQTableViewCell";
+    HQTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[HQTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    return cell;
+}
 
-    // Configure the view for the selected state
+- (void)setupUI {
+    
+    [self addSubview:self.newsTitleLabel];
+    [self addSubview:self.newsSubTitleLabel];
+    /**
+     * 错误的写法
+     */
+//    [self addSubview:_newsTitleLabel];
+//    [self addSubview:_newsSubTitleLabel];
+    
+    [self.newsTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).offset(8);
+        make.left.equalTo(self).offset(16);
+    }];
+    [_newsSubTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_newsTitleLabel.mas_bottom).offset(8);
+        make.left.equalTo(_newsTitleLabel);
+    }];
+}
+
+#pragma mark - lazy
+- (UILabel *)newsTitleLabel {
+    if (_newsTitleLabel == nil) {
+        _newsTitleLabel = [[UILabel alloc] init];
+        _newsTitleLabel.text = @"标题";
+        _newsTitleLabel.textColor = [UIColor darkGrayColor];
+    }
+    return _newsTitleLabel;
+}
+
+- (UILabel *)newsSubTitleLabel {
+    if (_newsSubTitleLabel == nil) {
+        _newsSubTitleLabel = [[UILabel alloc] init];
+        _newsSubTitleLabel.text = @"副标题";
+        _newsSubTitleLabel.textColor = [UIColor lightGrayColor];
+        _newsSubTitleLabel.font = [UIFont systemFontOfSize:14];
+    }
+    return _newsSubTitleLabel;
 }
 
 @end

@@ -10,4 +10,6 @@
 
 @interface HQTableViewCell : UITableViewCell
 
++ (instancetype)tableViewCellWithTableView:(UITableView *)tableView;
+
 @end
