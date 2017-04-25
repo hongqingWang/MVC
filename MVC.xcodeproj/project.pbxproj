@@ -110,6 +110,7 @@
 				TargetAttributes = {
 					1813B8491EAF831D0079BF8E = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 8V3D3JG4H4;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -272,6 +273,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8V3D3JG4H4;
 				INFOPLIST_FILE = MVC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.HNAGroup.Unicare.MVC;
@@ -283,6 +285,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8V3D3JG4H4;
 				INFOPLIST_FILE = MVC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.HNAGroup.Unicare.MVC;
