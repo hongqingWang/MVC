@@ -15,4 +15,7 @@
 /** 新闻摘要 */
 @property (nonatomic, copy) NSString *digest;
 
+/** 加载数据 */
++ (void)modelWithSuccess:(void(^)(NSArray *array))success error:(void(^)())error;
+
 @end

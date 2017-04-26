@@ -8,8 +8,6 @@
 
 #import "HQViewController.h"
 #import "HQTableViewCell.h"
-#import "HQNetworkTools.h"
-#import "MJExtension.h"
 #import "HQModel.h"
 
 @interface HQViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -32,19 +30,11 @@
 #pragma mark - loadData
 - (void)loadData {
     
-    /**
-     * http://c.m.163.com/nc/article/headline/T1348647853363/0-140.html
-     */
-    NSString *urlString = @"http://c.m.163.com/nc/article/headline/T1348647853363/0-10.html";
-    [[HQNetworkTools sharedTools] request:GET urlString:urlString parameters:nil finished:^(id result, NSError *error) {
-        if (error) {
-            
-            NSLog(@"%@", error);
-            return;
-        }
-        NSLog(@"%@", result[@"T1348647853363"]);
-        self.dataArr = [HQModel mj_objectArrayWithKeyValuesArray:result[@"T1348647853363"]];
+    [HQModel modelWithSuccess:^(NSArray *array) {
+        self.dataArr = array;
         [self.tableView reloadData];
+    } error:^{
+        NSLog(@"数据请求错误");
     }];
 }
 
@@ -79,13 +69,6 @@
         [self.view addSubview:_tableView];
     }
     return _tableView;
-}
-
-- (NSArray *)dataArr {
-    if (_dataArr == nil) {
-        _dataArr = [NSArray array];
-    }
-    return _dataArr;
 }
 
 @end
