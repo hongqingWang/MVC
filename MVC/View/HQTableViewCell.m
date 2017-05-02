@@ -9,6 +9,7 @@
 #import "HQTableViewCell.h"
 #import "Masonry.h"
 #import "HQModel.h"
+#import "UIImageView+WebCache.h"
 
 @interface HQTableViewCell ()
 
@@ -16,6 +17,8 @@
 @property (nonatomic, strong) UILabel *newsTitleLabel;
 /** 副标题 */
 @property (nonatomic, strong) UILabel *newsSubTitleLabel;
+/** 图片 */
+@property (nonatomic, strong) UIImageView *newsImageView;
 
 @end
 
@@ -24,6 +27,8 @@
 - (void)setModel:(HQModel *)model {
     _model = model;
     
+    NSURL *url = [NSURL URLWithString:model.imgsrc];
+    [self.newsImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"news_placeholder"]];
     self.newsTitleLabel.text = model.title;
     self.newsSubTitleLabel.text = model.digest;
 }
@@ -50,6 +55,7 @@
 
 - (void)setupUI {
     
+    [self addSubview:self.newsImageView];
     [self addSubview:self.newsTitleLabel];
     [self addSubview:self.newsSubTitleLabel];
     /**
@@ -58,9 +64,15 @@
 //    [self addSubview:_newsTitleLabel];
 //    [self addSubview:_newsSubTitleLabel];
     
-    [self.newsTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.newsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(8);
         make.left.equalTo(self).offset(16);
+        make.bottom.equalTo(self).offset(-8);
+        make.width.mas_equalTo(100);
+    }];
+    [self.newsTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_newsImageView);
+        make.left.equalTo(_newsImageView.mas_right).offset(8);
         make.right.equalTo(self).offset(-16);
     }];
     [_newsSubTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -71,6 +83,14 @@
 }
 
 #pragma mark - lazy
+- (UIImageView *)newsImageView {
+    if (_newsImageView == nil) {
+        _newsImageView = [[UIImageView alloc] init];
+        _newsImageView.image = [UIImage imageNamed:@"news_placeholder"];
+    }
+    return _newsImageView;
+}
+
 - (UILabel *)newsTitleLabel {
     if (_newsTitleLabel == nil) {
         _newsTitleLabel = [[UILabel alloc] init];
